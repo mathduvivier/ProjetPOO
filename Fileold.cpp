@@ -14,7 +14,7 @@ Grid File::FileRead(const string& FileName){
     int height;
     int width;
     int value;
-    vector<vector<int>> GridMat;
+    vector<int> Gridvector;
     ifstream fin(FileName);
 
     if (!fin.is_open()) {
@@ -27,19 +27,15 @@ Grid File::FileRead(const string& FileName){
     istringstream iss(line);
     iss>>height;
     iss>>width;
-    int j=0;
     while (getline(fin, line)) {
-	istringstream iss(line);
-        i=0;
     	while (iss >> value) {
-        	GridMat[j][i]=value;
+        	Gridvector[i]=value;
 		i++;
     	}
-	j++;
     }
 
     fin.close();
-    Grid g(height, width, GridMat);
+    Grid g(height, width, Gridvector);
     return g;
 }
 }
@@ -50,7 +46,7 @@ void WriteFile(Grid g){
     int height = g.get_height();
     int width = g.get_width();
     int value;
-    vector<vector<int>> GridMat = g.get_Mat();
+    vector<int> Gridvector = g.get_vector();
     ofstream fout(FileName);
     if (!fout.is_open()) {
         cerr << "Error: enable to write in " << FileName << endl;
@@ -60,7 +56,7 @@ void WriteFile(Grid g){
     fout << height << " " << width << endl;
     for (j=0, j<height, j++){
     	for (i=0, i<width, i++){
-    		fout<<GridMat[j][i]<<" ";
+    		fout<<vector[i+(j*width)]<<" ";
     	}
     	fout<<endl;
     }
