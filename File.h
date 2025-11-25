@@ -9,7 +9,7 @@ private:
 	string FileName;
 public:
 	File();
-	Grid FileRead(string FileName);
-	void WriteFile(Grid);
+	Grid FileRead(const string& FileName) const;
+	void WriteFile(const Grid&) const;
 };
 #endif

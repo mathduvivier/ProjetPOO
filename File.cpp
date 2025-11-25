@@ -6,7 +6,7 @@
 #include "Grid.h"
 using namespace std;
 
-File(){}
+File::File(){}
 
 Grid File::FileRead(const string& FileName){
 // Lit le contenu d'un fichier texte
@@ -14,7 +14,7 @@ Grid File::FileRead(const string& FileName){
     int height;
     int width;
     int value;
-    vector<vector<int>> GridMat;//vecteur de vecteur Gridmat
+    vector<vector<int>> GridMat(height, vector<int>(width));//Crée un tableau Gridmat qui prend en paramètre  height et width
     ifstream fin(FileName);//lecture du fichier
 
     if (!fin.is_open()) {//Si le fichier n'est pas lu
@@ -42,8 +42,8 @@ Grid File::FileRead(const string& FileName){
     Grid g(height, width, GridMat);
     return g;
 }
-}
-void WriteFile(Grid g){
+
+void File::WriteFile(const Grid& g){
 // Écrit du texte dans un fichier
     int i=0;
     int j=0;
@@ -58,12 +58,12 @@ void WriteFile(Grid g){
     }
 
     fout << height << " " << width << endl;//sortie des paramèetres de notre matrice, height et width
-    for (j=0, j<height, j++){//Pour j allant de 0 à height on incrémente j
-    	for (i=0, i<width, i++){//Pour i allant de 0 à width on incrémente i
+    for (j=0; j<height; j++){//Pour j allant de 0 à height on incrémente j
+    	for (i=0; i<width; i++){//Pour i allant de 0 à width on incrémente i
     		fout<<GridMat[j][i]<<" ";//sort la première ligne de la matrice avec un espace
     	}
     	fout<<endl;
     }
     fout.close();
 }
-}
+

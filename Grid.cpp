@@ -1,10 +1,10 @@
 #include "Grid.h"
 #include <string>
-using namespace std
+using namespace std;
 
 Grid::Grid(int height,int width,vector<vector<int>>& GridMat){
-    for (j=0, j<height, j++){
-        for (i=0, i<width, i++){
+    for (j=0; j<height; j++){
+        for (i=0; i<width; i++){
 		switch(GridMat[j][i]) {
 		  case 0:
 		    GridCells[j][i]=new DeadCell;
