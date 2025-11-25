@@ -11,6 +11,7 @@ class Grid{
 private:
 	int height;
 	int width;
+	Cell Neighbors;
 	std::vector<std::vector<Cell*>> GridCells;
 public:
 	Grid(int height,int width,const std::vector<std::vector<int>>& GridMat);
@@ -18,5 +19,10 @@ public:
 	int get_height() const;
 	int get_width() const;
 	Cell* get_Cell(int row, int col) const;
+	int calcCellNoigboors(int x, int y);
+	void update();
+	void display();
 };
 #endif
+
+
