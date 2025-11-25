@@ -14,25 +14,25 @@ Grid File::FileRead(const string& FileName){
     int height;
     int width;
     int value;
-    vector<vector<int>> GridMat;
-    ifstream fin(FileName);
+    vector<vector<int>> GridMat;//vecteur de vecteur Gridmat
+    ifstream fin(FileName);//lecture du fichier
 
-    if (!fin.is_open()) {
-        cerr << "Error : unable to open File " << FileName << endl;
+    if (!fin.is_open()) {//Si le fichier n'est pas lu
+        cerr << "Error : unable to open File " << FileName << endl;//sortie d'erreur
         exit(1);
     }
 
     string content, line;
-    getline(fin, line);
-    istringstream iss(line);
-    iss>>height;
-    iss>>width;
+    getline(fin, line);//prends la ligne de fin est la met dans line
+    istringstream iss(line);//récupération des caractères de la premieère ligne
+    iss>>height;//1er caractère = height
+    iss>>width;//2e caractère = width
     int j=0;
-    while (getline(fin, line)) {
-	istringstream iss(line);
+    while (getline(fin, line)) {//permet de passer d'une ligne à une autre
+	istringstream iss(line);//iss permet de prendre les caractères de la ligne
         i=0;
-    	while (iss >> value) {
-        	GridMat[j][i]=value;
+    	while (iss >> value) {//met les caractères pris pas iss est les met dans value
+        	GridMat[j][i]=value;//pour chaque coordonnnées on donne la valeur récupéré par iss
 		i++;
     	}
 	j++;
@@ -57,10 +57,10 @@ void WriteFile(Grid g){
         exit(1);
     }
 
-    fout << height << " " << width << endl;
-    for (j=0, j<height, j++){
-    	for (i=0, i<width, i++){
-    		fout<<GridMat[j][i]<<" ";
+    fout << height << " " << width << endl;//sortie des paramèetres de notre matrice, height et width
+    for (j=0, j<height, j++){//Pour j allant de 0 à height on incrémente j
+    	for (i=0, i<width, i++){//Pour i allant de 0 à width on incrémente i
+    		fout<<GridMat[j][i]<<" ";//sort la première ligne de la matrice avec un espace
     	}
     	fout<<endl;
     }
