@@ -1,15 +1,17 @@
 #ifndef FILE_H
 #define FILE_H
-#include "Grid.h"
-#include <string>
 
-using namespace std;
-class File{
-private:
-	string FileName;
+#include <string>
+#include <vector>
+#include "Grid.h"
+
+class File {
+
 public:
-	File();
-	Grid FileRead(const string& FileName) const;
-	void WriteFile(const Grid&) const;
+    File() {}
+
+    Grid FileRead(const std::string& FileName);
+    void WriteFile(const std::string& FileName, const Grid& g);
 };
+
 #endif
