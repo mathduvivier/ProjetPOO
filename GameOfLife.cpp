@@ -3,27 +3,24 @@
 
 using namespace std;
 
-GameOfLife::GameOfLife(int height, int width, const vector<vector<int>>& mat)
+GameOfLife::GameOfLife(const Grid& initialGrid)
+    : grid(initialGrid), iteration(0)
 {
-    grid = new Grid(height, width, mat);
-    generation = 0;
 }
 
 GameOfLife::~GameOfLife()
 {
-    delete grid;
 }
 
 void GameOfLife::display() const
 {
-    cout << "Generation : " << generation << endl;
-    grid->display();
+    grid.display();
 }
 
 void GameOfLife::step()
 {
-    grid->update();
-    generation++;
+    grid.update();
+    iteration++;
 }
 
 void GameOfLife::run(int steps)

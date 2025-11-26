@@ -26,8 +26,10 @@ public:
     Cell* get_Cell(int row, int col) const { return GridCells[row][col]; }
 
     int calcCellNeighbors(int x, int y);
+
     void update();
-    void display();
+
+    void display() const;      // <-- IMPORTANT : const ajouté !
 };
 
 #endif
