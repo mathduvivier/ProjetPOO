@@ -29,7 +29,7 @@ public:
 
     void update();
 
-    void display() const;      // <-- IMPORTANT : const ajouté !
+    void display() const;
 };
 
 #endif

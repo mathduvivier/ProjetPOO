@@ -2,6 +2,7 @@
 #define GAMEOFLIFE_H
 
 #include "Grid.h"
+#include "GraphicalInterface.h"
 
 class GameOfLife {
 
@@ -15,7 +16,15 @@ public:
 
     void display() const;
     void step();
-    void run(int steps);
+
+    // MODE CONSOLE
+    void runConsole(int steps);
+
+    // MODE GRAPHIQUE
+    void runGraphical(GraphicalInterface& interface);
+
+    // 🔥 NOUVEAU → permet de récupérer la grille finale
+    const Grid& getGrid() const { return grid; }
 };
 
 #endif

@@ -96,7 +96,7 @@ void Grid::update()
     GridCells = newGrid;
 }
 
-void Grid::display() const   // <-- IMPORTANT : const ajouté !
+void Grid::display() const
 {
     for (int x = 0; x < height; x++) {
         for (int y = 0; y < width; y++) {
