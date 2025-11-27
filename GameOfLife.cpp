@@ -1,5 +1,6 @@
 #include "GameOfLife.h"
 #include <iostream>
+#include <SFML/System.hpp>
 using namespace std;
 
 GameOfLife::GameOfLife(const Grid& initialGrid)
@@ -25,7 +26,7 @@ void GameOfLife::runConsole(int steps)
 {
     for (int i = 0; i < steps; i++) {
         display();
-        cout << endl; // ligne vide
+        cout << endl; 
         step();
     }
 }
@@ -36,6 +37,7 @@ void GameOfLife::runGraphical(GraphicalInterface& interface)
     while (interface.isOpen()) {
         interface.pollEvents();
         interface.displayGrid(grid);
-        step();   // met à jour la grille en continu
+        step();
+	sf::sleep(sf::seconds(1));
     }
 }

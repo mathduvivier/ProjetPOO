@@ -18,9 +18,9 @@ Grid File::FileRead(const string& FileName)
 
     vector<vector<int>> matrix(height, vector<int>(width));
 
-    for (int i = 0; i < height; i++)
-        for (int j = 0; j < width; j++)
-            fin >> matrix[i][j];
+    for (int row = 0; row < height; row++)
+        for (int col = 0; col < width; col++)
+            fin >> matrix[row][col];
 
     fin.close();
     return Grid(height, width, matrix);
@@ -40,9 +40,9 @@ void File::WriteFile(const string& FileName, const Grid& g)
 
     fout << height << " " << width << endl;
 
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            fout << g.get_Cell(i,j)->getSymbol() << " ";
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            fout << g.get_Cell(row,col)->getSymbol() << " ";
         }
         fout << endl;
     }

@@ -23,7 +23,6 @@ public:
     // MODE GRAPHIQUE
     void runGraphical(GraphicalInterface& interface);
 
-    // 🔥 NOUVEAU → permet de récupérer la grille finale
     const Grid& getGrid() const { return grid; }
 };
 

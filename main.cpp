@@ -21,14 +21,14 @@ int main()
     cout << "Combien d'iterations ? ";
     cin >> iterations;
 
-    // 1️⃣ Exécute le mode console
+    //Exécute le mode console
     game.runConsole(iterations);
 
     cout << "\nVoulez-vous voir le résultat en mode graphique ? (o/n) : ";
     char rep;
     cin >> rep;
 
-    // 2️⃣ Lance mode graphique AVEC le résultat final
+    // Lance mode graphique AVEC le résultat final
     if (rep == 'o' || rep == 'O') {
 
         // récupère la grille finale
