@@ -25,11 +25,12 @@ public:
 
     Cell* get_Cell(int row, int col) const { return GridCells[row][col]; }
 
-    int calcCellNeighbors(int x, int y);
+    int calcCellNeighbors(int row, int col);
 
     void update();
 
     void display() const;
+    std::vector<std::vector<int>> getMatrix() const;
 };
 
 #endif

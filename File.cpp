@@ -49,3 +49,47 @@ void File::WriteFile(const string& FileName, const Grid& g)
 
     fout.close();
 }
+void File::writeIteration(const std::vector<std::vector<int>>& mat, int iteration) const
+{
+    std::ostringstream name;
+    name << "iteration_" << iteration << ".txt";
+
+    std::ofstream fout(name.str());
+    if (!fout.is_open()) {
+        std::cerr << "Erreur : impossible d’écrire " << name.str() << std::endl;
+        return;
+    }
+
+    int h = mat.size();
+    int w = mat[0].size();
+
+    fout << h << " " << w << "\n";
+
+    for (int r = 0; r < h; r++) {
+        for (int c = 0; c < w; c++) {
+            fout << mat[r][c] << " ";
+        }
+        fout << "\n";
+    }
+
+    fout.close();
+}
+void File::displayIterationFile(int iteration) const
+{
+    std::ostringstream name;
+    name << "iteration_" << iteration << ".txt";
+
+    std::ifstream fin(name.str());
+    if (!fin.is_open()) {
+        std::cerr << "Erreur : fichier introuvable : " << name.str() << std::endl;
+        return;
+    }
+
+    std::string line;
+
+    while (std::getline(fin, line)) {
+        std::cout << line << std::endl;
+    }
+
+    fin.close();
+}

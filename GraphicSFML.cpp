@@ -1,4 +1,3 @@
-
 #include "GraphicSFML.h"
 
 GraphicSFML::GraphicSFML(int cellSize, int width, int height)
@@ -25,22 +24,16 @@ void GraphicSFML::displayGrid(const Grid& grid)
 
             char symbol = grid.get_Cell(row, col)->getSymbol();
 
-            
-            if (symbol=='O'){
-               cellShape.setFillColor(sf::Color::Green);
+            if (symbol == '1') {
+                cellShape.setFillColor(sf::Color::Green);
             }
-            else if (symbol == '#') {                
-                cellShape.setFillColor(sf::Color::Red);
-            }
-            else if (symbol == '.') {                
+//            else if (symbol == '#') {
+//                cellShape.setFillColor(sf::Color::Red);
+//            }
+            else {
                 cellShape.setFillColor(sf::Color::Blue);
             }
-            else {
-                
-                continue;
-            }
 
-            
             cellShape.setPosition(col * cellSize, row * cellSize);
             window.draw(cellShape);
         }
@@ -48,4 +41,3 @@ void GraphicSFML::displayGrid(const Grid& grid)
 
     window.display();
 }
-

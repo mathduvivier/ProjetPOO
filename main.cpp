@@ -1,48 +1,104 @@
 #include <iostream>
+#include <thread>
+#include <chrono>
+
 #include "File.h"
+#include "Grid.h"
 #include "GameOfLife.h"
 #include "GraphicSFML.h"
 
 using namespace std;
 
+// ================== MENU ==================
+void displayMenu() {
+    cout << "=== Jeu de la Vie ===" << endl;
+    cout << "1. Mode Graphique (SFML)" << endl;
+    cout << "2. Mode Console (silencieux)" << endl;
+    cout << "3. Test unitaire" << endl;
+    cout << "4. Quitter" << endl;
+    cout << "Choisissez une option : ";
+}
+
+// ================== TEST UNITAIRE ==================
+void testUnitaire(Grid& grille) {
+    int nb;
+    cout << "Afficher quelle iteration ? ";
+    cin >> nb;
+
+    for (int i = 0; i < nb; i++) {
+        grille.update();
+    }
+
+    grille.display(); // test = affichage console
+}
+
+// ================== PROGRAMME PRINCIPAL ==================
 int main()
 {
     string filename;
-
-    cout << "Nom du fichier d'entree : ";
+    cout << "Nom du fichier d'entrée : ";
     cin >> filename;
 
-    File f;
-    Grid g = f.FileRead(filename);
+    File fichier;
 
-    GameOfLife game(g);
+    int choix = 0;
 
-    int iterations;
-    cout << "Combien d'iterations ? ";
-    cin >> iterations;
+    do {
+        displayMenu();
+        cin >> choix;
 
-    //Exécute le mode console
-    game.runConsole(iterations);
+        switch (choix) {
 
-    cout << "\nVoulez-vous voir le résultat en mode graphique ? (o/n) : ";
-    char rep;
-    cin >> rep;
+        // MODE GRAPHIQUE
+        case 1: {
+            // recharge grille initiale pour SFML
+            Grid g2 = fichier.FileRead(filename);
 
-    // Lance mode graphique AVEC le résultat final
-    if (rep == 'o' || rep == 'O') {
+            GraphicSFML gui(50, g2.get_width(), g2.get_height());
 
-        // récupère la grille finale
-        const Grid& finalGrid = game.getGrid();
+            while (gui.isOpen()) {
+                gui.pollEvents();
+                gui.displayGrid(g2);
+                sf::sleep(sf::seconds(0.3));
+                g2.update();
+            }
+            break;
+        }
 
-        // crée SFML avec la grille finale
-        GraphicSFML gui(20, finalGrid.get_width(), finalGrid.get_height());
+        // MODE CONSOLE (création fichiers)
+        case 2: {
+            int steps;
+            cout << "Nombre d'iterations ? ";
+            cin >> steps;
 
-        // crée un second GameOfLife basé sur la grille finale
-        GameOfLife visual(finalGrid);
+            Grid g3 = fichier.FileRead(filename); // recharge grille initiale
 
-        // affiche l’évolution du résultat final
-        visual.runGraphical(gui);
-    }
+            GameOfLife sim(g3);
+            sim.runConsole(steps, fichier);
+
+            cout << "Fichiers créés pour chaque iteration." << endl;
+            break;
+        }
+
+        // MODE TEST UNITAIRE
+        case 3: {
+            int num;
+            cout << "Quel fichier iteration_X afficher ? ";
+            cin >> num;
+
+            fichier.displayIterationFile(num);
+            break;
+        }
+
+        case 4:
+            cout << "Au revoir !" << endl;
+            break;
+
+        default:
+            cout << "Option invalide." << endl;
+        }
+
+    } while (choix != 4);
 
     return 0;
 }

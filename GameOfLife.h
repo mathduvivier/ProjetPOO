@@ -1,11 +1,10 @@
 #ifndef GAMEOFLIFE_H
 #define GAMEOFLIFE_H
-
-#include "Grid.h"
 #include "GraphicalInterface.h"
+#include "Grid.h"
+#include "File.h"
 
 class GameOfLife {
-
 private:
     Grid grid;
     int iteration;
@@ -17,13 +16,8 @@ public:
     void display() const;
     void step();
 
-    // MODE CONSOLE
-    void runConsole(int steps);
-
-    // MODE GRAPHIQUE
+    void runConsole(int steps, const File& fichier);
     void runGraphical(GraphicalInterface& interface);
-
-    const Grid& getGrid() const { return grid; }
 };
 
 #endif

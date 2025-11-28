@@ -19,15 +19,20 @@ void GameOfLife::step()
 {
     grid.update();
     iteration++;
+    std::cout << "Iteration " << iteration << std::endl;
 }
 
 // MODE CONSOLE
-void GameOfLife::runConsole(int steps)
+void GameOfLife::runConsole(int steps, const File& fichier)
 {
     for (int i = 0; i < steps; i++) {
-        display();
-        cout << endl; 
-        step();
+
+        // créer le fichier iteration_i.txt
+        fichier.writeIteration(grid.getMatrix(), i);
+
+        // mise à jour
+        grid.update();
+	iteration++;
     }
 }
 
@@ -36,8 +41,10 @@ void GameOfLife::runGraphical(GraphicalInterface& interface)
 {
     while (interface.isOpen()) {
         interface.pollEvents();
-        interface.displayGrid(grid);
-        step();
-	sf::sleep(sf::seconds(1));
+
+        interface.displayGrid(grid);   // affiche UNE SEULE matrice
+        sf::sleep(sf::seconds(2)); // tempo entre matrices
+
+        step();  // passe à la matrice suivante
     }
 }

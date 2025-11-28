@@ -6,7 +6,7 @@
 class AliveState : public State {
 public:
     bool isAlive() const override { return true; }
-    char getSymbol() const override { return 'O'; }
+    char getSymbol() const override { return '1'; }
 };
 
 #endif
