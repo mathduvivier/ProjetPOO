@@ -86,8 +86,7 @@ void File::displayIterationFile(int iteration) const
     }
 
     std::string line;
-
-    while (std::getline(fin, line)) {
+    while (getline(fin, line)) {
         std::cout << line << std::endl;
     }
 

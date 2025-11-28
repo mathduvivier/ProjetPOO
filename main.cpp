@@ -1,7 +1,4 @@
 #include <iostream>
-#include <thread>
-#include <chrono>
-
 #include "File.h"
 #include "Grid.h"
 #include "GameOfLife.h"
@@ -9,30 +6,16 @@
 
 using namespace std;
 
-// ================== MENU ==================
+// ===== MENU =====
 void displayMenu() {
     cout << "=== Jeu de la Vie ===" << endl;
     cout << "1. Mode Graphique (SFML)" << endl;
-    cout << "2. Mode Console (silencieux)" << endl;
-    cout << "3. Test unitaire" << endl;
+    cout << "2. Mode Console (fichiers d’iterations)" << endl;
+    cout << "3. Test unitaire (afficher un fichier iteration_X)" << endl;
     cout << "4. Quitter" << endl;
-    cout << "Choisissez une option : ";
+    cout << "Votre choix : ";
 }
 
-// ================== TEST UNITAIRE ==================
-void testUnitaire(Grid& grille) {
-    int nb;
-    cout << "Afficher quelle iteration ? ";
-    cin >> nb;
-
-    for (int i = 0; i < nb; i++) {
-        grille.update();
-    }
-
-    grille.display(); // test = affichage console
-}
-
-// ================== PROGRAMME PRINCIPAL ==================
 int main()
 {
     string filename;
@@ -49,38 +32,39 @@ int main()
 
         switch (choix) {
 
-        // MODE GRAPHIQUE
+        // ======================= MODE GRAPHIQUE =======================
         case 1: {
-            // recharge grille initiale pour SFML
-            Grid g2 = fichier.FileRead(filename);
+            // Charger une NOUVELLE grille pour ce mode
+            Grid g = fichier.FileRead(filename);
 
-            GraphicSFML gui(50, g2.get_width(), g2.get_height());
+            GraphicSFML gui(50, g.get_width(), g.get_height());
 
             while (gui.isOpen()) {
                 gui.pollEvents();
-                gui.displayGrid(g2);
+                gui.displayGrid(g);
                 sf::sleep(sf::seconds(0.3));
-                g2.update();
+                g.update();
             }
             break;
         }
 
-        // MODE CONSOLE (création fichiers)
+        // ======================= MODE CONSOLE =========================
         case 2: {
             int steps;
-            cout << "Nombre d'iterations ? ";
+            cout << "Combien d'iterations ? ";
             cin >> steps;
 
-            Grid g3 = fichier.FileRead(filename); // recharge grille initiale
+            // Charger une NOUVELLE grille pour ce mode
+            Grid g = fichier.FileRead(filename);
+            GameOfLife sim(g);
 
-            GameOfLife sim(g3);
-            sim.runConsole(steps, fichier);
+            sim.runConsole(steps, fichier);  // TON runConsole(File&) est respecté
 
-            cout << "Fichiers créés pour chaque iteration." << endl;
+            cout << "Fichiers créés." << endl;
             break;
         }
 
-        // MODE TEST UNITAIRE
+        // ======================= TEST UNITAIRE ========================
         case 3: {
             int num;
             cout << "Quel fichier iteration_X afficher ? ";
