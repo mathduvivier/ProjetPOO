@@ -26,7 +26,7 @@ Grid File::FileRead(const string& FileName)
     return Grid(height, width, matrix);
 }
 
-void File::WriteFile(const string& FileName, const Grid& g)
+void File::WriteFile(const string& FileName, const Grid& g) const
 {
     ofstream fout(FileName);
 
@@ -49,31 +49,8 @@ void File::WriteFile(const string& FileName, const Grid& g)
 
     fout.close();
 }
-void File::writeIteration(const std::vector<std::vector<int>>& mat, int iteration) const
-{
-    std::ostringstream name;
-    name << "iteration_" << iteration << ".txt";
 
-    std::ofstream fout(name.str());
-    if (!fout.is_open()) {
-        std::cerr << "Erreur : impossible d’écrire " << name.str() << std::endl;
-        return;
-    }
 
-    int h = mat.size();
-    int w = mat[0].size();
-
-    fout << h << " " << w << "\n";
-
-    for (int r = 0; r < h; r++) {
-        for (int c = 0; c < w; c++) {
-            fout << mat[r][c] << " ";
-        }
-        fout << "\n";
-    }
-
-    fout.close();
-}
 void File::displayIterationFile(int iteration) const
 {
     std::ostringstream name;

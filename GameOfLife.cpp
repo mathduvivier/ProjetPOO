@@ -1,6 +1,7 @@
 #include "GameOfLife.h"
 #include <iostream>
 #include <SFML/System.hpp>
+#include <sstream>
 using namespace std;
 
 GameOfLife::GameOfLife(const Grid& initialGrid)
@@ -19,20 +20,21 @@ void GameOfLife::step()
 {
     grid.update();
     iteration++;
-    std::cout << "Iteration " << iteration << std::endl;
 }
 
 // MODE CONSOLE
 void GameOfLife::runConsole(int steps, const File& fichier)
 {
+
+    ostringstream filename;
     for (int i = 0; i < steps; i++) {
-
         // créer le fichier iteration_i.txt
-        fichier.writeIteration(grid.getMatrix(), i);
-
+    //    fichier.writeIteration(grid.getMatrix(), i);
+        filename << "iteration_" << i << ".txt";
+        fichier.WriteFile(filename.str(), grid);
         // mise à jour
-        grid.update();
-	iteration++;
+        step();
+	filename.str("");
     }
 }
 

@@ -19,17 +19,15 @@ Grid::Grid(int height, int width, const vector<vector<int>>& GridMat)
                 GridCells[row][col] = new Cell(new AliveState());
                 break;
 
-            /* ----- OBSTACLES DÉSACTIVÉS -----
             case 2:
                 GridCells[row][col] = new Cell(new Obstacle());
                 break;
-            ---------------------------------- */
 
-//            default:
-//                cout << "Erreur: type inconnu" << endl;
-  //              GridCells[row][col] = new Cell(new DeadState());
-    //            break;
-	default:
+//            case 3:
+  //              cout << "Erreur: type inconnu" << endl;
+    //            GridCells[row][col] = new Cell(new DeadState());
+      //          break;
+	    default:
 	    cout << "Erreur: type inconnu, valeur = " << GridMat[row][col]
 	         << " en (" << row << "," << col << ")" << endl;
 	    GridCells[row][col] = new Cell(new DeadState());
@@ -60,9 +58,9 @@ Grid::Grid(const Grid& other)
                 GridCells[row][col] = new Cell(new DeadState());
                 break;
 
- //           case '#':   // obstacle (si tu le réactives un jour)
- //               GridCells[row][col] = new Cell(new Obstacle());
- //               break;
+            case '2':   // obstacle
+                GridCells[row][col] = new Cell(new Obstacle());
+                break;
 
             default:
                 std::cout << "Erreur: symbole inconnu '" << symbol
@@ -97,10 +95,8 @@ int Grid::calcCellNeighbors(int row, int col)
 
         Cell* neighbor = GridCells[nrow][ncol];
 
-        /* ----- OBSTACLES DÉSACTIVÉS -----
-        if (neighbor->getSymbol() == '#')
+        if (neighbor->getSymbol() == '2')
             continue;
-        ---------------------------------- */
 
         if (neighbor->isAlive())
             count++;
@@ -118,12 +114,10 @@ void Grid::update()
 
             Cell* c = GridCells[row][col];
 
-            /* ----- OBSTACLES DÉSACTIVÉS -----
-            if (c->getSymbol() == '#') {
+            if (c->getSymbol() == '2') {
                 newGrid[row][col] = new Cell(new Obstacle());
                 continue;
             }
-            ---------------------------------- */
 
             int n = calcCellNeighbors(row, col);
 
@@ -165,10 +159,19 @@ std::vector<std::vector<int>> Grid::getMatrix() const
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
 
-            if (GridCells[row][col]->isAlive())
+	char s = GridCells[row][col]->getSymbol();
+
+            if (s == '1')          // vivante
                 mat[row][col] = 1;
-            else
+
+            else if (s == '0')     // morte
                 mat[row][col] = 0;
+
+            else if (s == '2')     // obstacle
+                mat[row][col] = 2;
+
+            else
+                mat[row][col] = 0; // valeur par défaut
         }
     }
 
