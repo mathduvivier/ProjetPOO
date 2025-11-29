@@ -4,6 +4,7 @@ using namespace std;
 Grid::Grid(int height, int width, const vector<vector<int>>& GridMat)
     : height(height), width(width),
       GridCells(height, vector<Cell*>(width))
+
 {
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
@@ -39,12 +40,48 @@ Grid::Grid(int height, int width, const vector<vector<int>>& GridMat)
     }
 }
 
+Grid::Grid(const Grid& other)
+    : height(other.height),
+      width(other.width),
+      GridCells(height, std::vector<Cell*>(width))
+{
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+
+            char symbol = other.GridCells[row][col]->getSymbol();
+
+            switch (symbol)
+            {
+            case '1':   // cellule vivante
+                GridCells[row][col] = new Cell(new AliveState());
+                break;
+
+            case '0':   // cellule morte
+                GridCells[row][col] = new Cell(new DeadState());
+                break;
+
+ //           case '#':   // obstacle (si tu le réactives un jour)
+ //               GridCells[row][col] = new Cell(new Obstacle());
+ //               break;
+
+            default:
+                std::cout << "Erreur: symbole inconnu '" << symbol
+                          << "' en (" << row << "," << col << ")\n";
+                GridCells[row][col] = new Cell(new DeadState());
+                break;
+            }
+        }
+    }
+}
+
 Grid::~Grid()
 {
     for (int row = 0; row < height; row++)
         for (int col = 0; col < width; col++)
             delete GridCells[row][col];
 }
+
+
 
 int Grid::calcCellNeighbors(int row, int col)
 {

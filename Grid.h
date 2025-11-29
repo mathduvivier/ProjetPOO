@@ -19,7 +19,7 @@ private:
 public:
     Grid(int height, int width, const std::vector<std::vector<int>>& GridMat);
     ~Grid();
-
+    Grid(const Grid& other);
     int get_height() const { return height; }
     int get_width() const { return width; }
 
