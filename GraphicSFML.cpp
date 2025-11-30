@@ -12,7 +12,6 @@ void GraphicSFML::pollEvents() {
             window.close();
     }
 }
-
 void GraphicSFML::displayGrid(const Grid& grid)
 {
     window.clear();
@@ -22,15 +21,16 @@ void GraphicSFML::displayGrid(const Grid& grid)
     for (int row = 0; row < grid.get_height(); row++) {
         for (int col = 0; col < grid.get_width(); col++) {
 
-            char symbol = grid.get_Cell(row, col)->getSymbol();
+            bool CellAlive = grid.get_Cell(row, col)->isAlive();
+            bool CellObstacle = grid.get_Cell(row, col)->isObstacle();
 
-            if (symbol == '1') {
+            if (CellAlive && !CellObstacle) {
                 cellShape.setFillColor(sf::Color::Green);
             }
-            else if (symbol == '2' ) {
+            else if (CellAlive && CellObstacle) {
                 cellShape.setFillColor(sf::Color::Magenta);
             }
-            else if (symbol == '3' ) {
+            else if (!CellAlive && CellObstacle) {
                 cellShape.setFillColor(sf::Color::Red);
             }
             else {
