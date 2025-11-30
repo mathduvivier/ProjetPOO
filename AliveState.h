@@ -7,6 +7,7 @@ class AliveState : public State {
 public:
     bool isAlive() const override { return true; }
     char getSymbol() const override { return '1'; }
+    bool isObstacle() const override { return false; }
 };
 
 #endif

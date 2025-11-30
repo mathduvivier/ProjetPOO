@@ -12,6 +12,7 @@ public:
 
     bool isAlive() const { return state->isAlive(); }
     char getSymbol() const { return state->getSymbol(); }
+    bool isObstacle() const { return state->isObstacle(); }
 
     void setState(State* s) { state = s; }
 };

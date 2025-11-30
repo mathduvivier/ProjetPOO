@@ -27,7 +27,10 @@ void GraphicSFML::displayGrid(const Grid& grid)
             if (symbol == '1') {
                 cellShape.setFillColor(sf::Color::Green);
             }
-            else if (symbol == '2') {
+            else if (symbol == '2' ) {
+                cellShape.setFillColor(sf::Color::Magenta);
+            }
+            else if (symbol == '3' ) {
                 cellShape.setFillColor(sf::Color::Red);
             }
             else {

@@ -7,7 +7,8 @@
 #include "Cell.h"
 #include "AliveState.h"
 #include "DeadState.h"
-#include "Obstacle.h"
+#include "AliveObstacleState.h"
+#include "DeadObstacleState.h"
 
 class Grid {
 
