@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// ===== MENU =====
+// Affiche le menu principal du programme
 void displayMenu() {
     cout << "=== Jeu de la Vie ===" << endl;
     cout << "1. Mode Graphique (SFML)" << endl;
@@ -19,53 +19,56 @@ void displayMenu() {
 int main()
 {
     string filename;
+
+    // On demande le nom du fichier contenant la grille initiale
     cout << "Nom du fichier d'entrée : ";
     cin >> filename;
 
     File fichier;
 
+    int steps;
+    // Nombre d’itérations du Game of Life à exécuter
+    cout << "Combien d'iterations ? ";
+    cin >> steps;
+
     int choix = 0;
 
+    // Boucle principale du menu
     do {
         displayMenu();
         cin >> choix;
 
         switch (choix) {
 
-        // ======================= MODE GRAPHIQUE =======================
         case 1: {
-            // Charger une NOUVELLE grille pour ce mode
-            Grid g = fichier.FileRead(filename);
-
-            GraphicSFML gui(50, g.get_width(), g.get_height());
-
-            while (gui.isOpen()) {
-                gui.pollEvents();
-                gui.displayGrid(g);
-                sf::sleep(sf::seconds(0.3));
-                g.update();
-            }
-            break;
-        }
-
-        // ======================= MODE CONSOLE =========================
-        case 2: {
-            int steps;
-            cout << "Combien d'iterations ? ";
-            cin >> steps;
-
-            // Charger une NOUVELLE grille pour ce mode
+            // Mode graphique SFML
+            // On charge la grille initiale depuis le fichier
             Grid g = fichier.FileRead(filename);
             GameOfLife sim(g);
 
-            sim.runConsole(steps, fichier);  // TON runConsole(File&) est respecté
+            // Initialisation de la fenêtre graphique
+            GraphicSFML gui(50, g.get_width(), g.get_height());
+
+            // Exécution du Game of Life dans la fenêtre
+            sim.runGraphical(steps, gui);
+
+            break;
+        }
+
+        case 2: {
+            // Mode console (sauvegarde des itérations dans des fichiers)
+            Grid g = fichier.FileRead(filename);
+            GameOfLife sim(g);
+
+            // Génère les fichiers iteration_X
+            sim.runConsole(steps, fichier);
 
             cout << "Fichiers créés." << endl;
             break;
         }
 
-        // ======================= TEST UNITAIRE ========================
         case 3: {
+            // Affichage d’un fichier d’itération déjà généré
             int num;
             cout << "Quel fichier iteration_X afficher ? ";
             cin >> num;
@@ -75,14 +78,16 @@ int main()
         }
 
         case 4:
+            // Sortie du programme
             cout << "Au revoir !" << endl;
             break;
 
         default:
+            // Mauvais choix dans le menu
             cout << "Option invalide." << endl;
         }
 
-    } while (choix != 4);
+    } while (choix != 4); // On continue tant que l'utilisateur ne quitte pas
 
     return 0;
 }
