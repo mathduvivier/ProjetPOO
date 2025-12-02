@@ -22,7 +22,9 @@ void GameOfLife::display() const
 // Effectue une étape du jeu : mise à jour + incrémentation du compteur
 void GameOfLife::step()
 {
+    Grid oldGrid = grid;
     grid.update();
+    grid.testUpdate(oldGrid);
     iteration++;
 }
 

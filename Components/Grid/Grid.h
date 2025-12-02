@@ -47,6 +47,8 @@ public:
     // Affiche la grille dans la console
     void display() const;
 
+    bool testUpdate( Grid& oldGrid);
+
     // Renvoie une matrice d'entiers représentant les états des cellules
     std::vector<std::vector<int>> getMatrix() const;
 };

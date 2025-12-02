@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include "File.h"
 #include "Grid.h"
 #include "GameOfLife.h"
@@ -16,59 +17,87 @@ void displayMenu() {
     cout << "Votre choix : ";
 }
 
+int askPositiveInt(const string& message)
+{
+    int value;
+
+    while (true) {
+        cout << message;
+        cin >> value;
+
+        // Vérification : cin en erreur ou valeur négative / zéro
+        if (cin.fail() || value <= 0) {
+
+            cout << " Erreur : vous devez entrer un entier positif.\n\n";
+
+            // Nettoyage du flux d'entrée
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        return value;
+    }
+}
+
+
 int main()
 {
     string filename;
-
-    // On demande le nom du fichier contenant la grille initiale
     cout << "Nom du fichier d'entrée : ";
     cin >> filename;
 
     File fichier;
 
-    int steps;
-    // Nombre d’itérations du Game of Life à exécuter
-    cout << "Combien d'iterations ? ";
-    cin >> steps;
+    //int steps;
+    //cout << "Combien d'iterations ? ";
+    //cin >> steps;
+
+    int steps = askPositiveInt("Combien d'iterations ? ");
 
     int choix = 0;
+    bool consoleUtilisee = false;   // <-- important
 
-    // Boucle principale du menu
     do {
         displayMenu();
         cin >> choix;
 
         switch (choix) {
 
+        // ======================= MODE GRAPHIQUE =======================
         case 1: {
-            // Mode graphique SFML
-            // On charge la grille initiale depuis le fichier
             Grid g = fichier.FileRead(filename);
             GameOfLife sim(g);
 
-            // Initialisation de la fenêtre graphique
             GraphicSFML gui(50, g.get_width(), g.get_height());
 
-            // Exécution du Game of Life dans la fenêtre
             sim.runGraphical(steps, gui);
 
-            break;
+            break;   // NE DÉBLOQUE PAS LE TEST UNITAIRE
         }
 
+        // ======================= MODE CONSOLE =========================
         case 2: {
-            // Mode console (sauvegarde des itérations dans des fichiers)
             Grid g = fichier.FileRead(filename);
             GameOfLife sim(g);
 
-            // Génère les fichiers iteration_X
             sim.runConsole(steps, fichier);
 
             cout << "Fichiers créés." << endl;
+
+            consoleUtilisee = true;   // <-- débloque le test unitaire
             break;
         }
 
+        // ======================= TEST UNITAIRE ========================
         case 3: {
-            // Affichage d’un fichier d’itération déjà généré
+
+            if (!consoleUtilisee) {
+                cout << " Erreur : Vous devez d'abord utiliser le mode console (option 2)"
+                        " pour générer les fichiers iteration_X avant de lancer le test.\n";
+                break;
+            }
+
             int num;
             cout << "Quel fichier iteration_X afficher ? ";
             cin >> num;
@@ -78,16 +107,14 @@ int main()
         }
 
         case 4:
-            // Sortie du programme
             cout << "Au revoir !" << endl;
             break;
 
         default:
-            // Mauvais choix dans le menu
             cout << "Option invalide." << endl;
         }
 
-    } while (choix != 4); // On continue tant que l'utilisateur ne quitte pas
+    } while (choix != 4);
 
     return 0;
 }
