@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include "Test.h"
 #include "File.h"
 #include "Grid.h"
 #include "GameOfLife.h"
@@ -12,8 +13,9 @@ void displayMenu() {
     cout << "=== Jeu de la Vie ===" << endl;
     cout << "1. Mode Graphique (SFML)" << endl;
     cout << "2. Mode Console (fichiers d’iterations)" << endl;
-    cout << "3. Test unitaire (afficher un fichier iteration_X)" << endl;
-    cout << "4. Quitter" << endl;
+    cout << "3. Affichage (afficher un fichier iteration_X)" << endl;
+    cout << "4. Test unitaires" << endl;
+    cout << "5. Quitter" << endl;
     cout << "Votre choix : ";
 }
 
@@ -105,8 +107,11 @@ int main()
             fichier.displayIterationFile(num);
             break;
         }
+	case 4:
+	    runAllTests();
+	    break;
 
-        case 4:
+        case 5:
             cout << "Au revoir !" << endl;
             break;
 
@@ -114,7 +119,7 @@ int main()
             cout << "Option invalide." << endl;
         }
 
-    } while (choix != 4);
+    } while (choix != 5);
 
     return 0;
 }

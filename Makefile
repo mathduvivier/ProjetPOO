@@ -5,7 +5,8 @@ CXXFLAGS = -Wall -Wextra -std=c++17 \
            -IServices \
            -IServices/File \
            -IServices/GameOfLife \
-           -IIHM
+           -IIHM \
+           -IServices/Test
 
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
@@ -13,7 +14,8 @@ SRC = main.cpp \
       Components/Grid/Grid.cpp \
       Services/GameOfLife/GameOfLife.cpp \
       Services/File/File.cpp \
-      IHM/GraphicSFML.cpp
+      IHM/GraphicSFML.cpp \
+      Services/Test/Test.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -28,6 +30,7 @@ clean:
 	rm -f Services/*.o
 	rm -f Services/File/*.o
 	rm -f Services/GameOfLife/*.o
+	rm -f Services/Test/*.o
 	rm -f IHM/*.o
 	rm -f game
 
