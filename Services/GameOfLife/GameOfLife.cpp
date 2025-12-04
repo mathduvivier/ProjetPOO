@@ -24,7 +24,6 @@ void GameOfLife::step()
 {
     Grid oldGrid = grid;
     grid.update();
-    grid.testUpdate(oldGrid);
     iteration++;
 }
 

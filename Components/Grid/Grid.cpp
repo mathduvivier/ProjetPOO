@@ -104,58 +104,6 @@ int Grid::calcCellNeighbors(int row, int col)
     return count;
 }
 
-bool Grid::testUpdate( Grid& oldGrid)
-{
-    bool ok = true;
-
-    for (int row = 0; row < height; row++) {
-        for (int col = 0; col < width; col++) {
-
-            Cell* oldCell = oldGrid.GridCells[row][col];
-            Cell* newCell = this->GridCells[row][col];
-
-            int n = oldGrid.calcCellNeighbors(row, col);
-
-            bool expectedAlive;
-
-            if (!oldCell->isObstacle()) {
-
-                // Règles classiques du jeu
-                if (oldCell->isAlive()) {
-                    expectedAlive = !(n < 2 || n > 3);
-                } else {
-                    expectedAlive = (n == 3);
-                }
-
-            } else {
-                // Obstacles : état vivant ou mort inchangé
-                expectedAlive = oldCell->isAlive();
-            }
-
-            // Comparaison avec la nouvelle grille
-            if (expectedAlive != newCell->isAlive()) {
-
-                cout << " Erreur update() en (" << row << ", " << col << ")\n";
-                cout << "   Voisins : " << n << "\n";
-                cout << "   Ancien état : "
-                     << (oldCell->isAlive() ? "Vivant" : "Mort")
-                     << (oldCell->isObstacle() ? " (Obstacle)" : "")
-                     << "\n";
-                cout << "   Attendu : "
-                     << (expectedAlive ? "Vivant" : "Mort") << "\n";
-                cout << "   Nouveau : "
-                     << (newCell->isAlive() ? "Vivant" : "Mort") << "\n\n";
-
-                ok = false;
-            }
-        }
-    }
-
-    if (ok)
-        cout << "update() cohérent avec les règles du jeu !\n";
-
-    return ok;
-}
 
 
 // Met à jour la grille selon les règles du jeu de la vie,
