@@ -1,4 +1,5 @@
 Documentation utilisateur 
+
 1.1Présentation générale 
 Ce programme implémente une version personnalisée du « Jeu de la Vie » de 
 John Conway. 
@@ -12,6 +13,7 @@ Il permet de :
 Fonctionnement de notre jeu  
 Le fonctionnement du programme repose sur un menu interactif composé de 
 cinq modes. 
+
 1.2. Format du fichier d’entrée 
 L’utilisateur doit fournir un fichier texte contenant : 
 1. Deux entiers : hauteur et largeur de la grille ; 
