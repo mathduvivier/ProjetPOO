@@ -1,53 +1,111 @@
-ProjePROJET POO : le jeu de la vie
-Énoncé
-Le jeu de la vie désigne un automate cellulaire proposé par le mathématicien John Conway. Il décrit l’évolution d’une population de cellules sur un intervalle de temps discret. Les cellules placées dans une grille rectangulaire deux dimensionnelle sont caractérisées par deux états ; elles sont soit vivantes, soit mortes. A l’exclusion des bordures, le voisinage d’une cellule est formé par 8 autres cellules directement adjacentes. Pour passer de l’itération 
-t à l’itération t+1, l’état des cellules dans la grille est actualisé selon les règles suivantes :
-
-Une cellule morte possédant exactement trois voisines vivantes devient vivante.
-Une cellule vivante possédant deux ou trois voisines vivantes reste vivante, sinon elle meurt.
-Vous proposerez une implémentation en C++ du jeu de la vie en vous reposant sur les concepts de la programmation orientée objet. En entrée, votre programme consommera un fichier dont la première ligne permettra de spécifier la taille de la grille. Suivra une matrice de booléens, décrivant l’état initial, vivant (1) ou mort (0) des cellules. Par exemple :
-
-5 10
-0 0 1 0 0 0 0 0 0 0
-0 0 0 1 0 0 0 0 0 0
-0 1 1 1 0 0 0 0 0 0
-0 0 0 0 0 0 0 0 0 0
-0 0 0 0 0 0 0 0 0 0
-Pour aboutir vous formerez des groupes de 2 étudiants. L’utilisation de GIT par tous les membres du projet sera indispensable. L’évaluation portera sur les éléments suivants :
-
-la réponse au besoin
-la qualité du code
-la robustesse du programme
-la mise en oeuvre des concepts de POO
-le niveau d’aboutissement
-la maitrîse du programme par le groupe
-Ce projet sera le fruit d’un travail limité aux membres d’un groupe. Toute tentative de plagiat, toute ressemblance entre les codes livrés, toute incapacité à décrire le programme et le code fourni seront sanctionnées.
-
-Spécifications techniques
-Implémenter votre programme de sorte à faire au maximum usage des concepts de la POO en C++. L’objectif n’est pas d’aboutir à un programme procédural. Le respect des principes SOLID sera déterminant, par exemple il s’agira d’appliquer les contraintes suivantes :
-Le jeu, la grille et les cellules seront implémentés sous forme de classes.
-L’état des cellules sera représenté à l’aide d’une hiérarchie de classes et exploitera le polymorphisme d’héritage.
-Les règles de calcul de l’état d’une cellule, dont le comportement pourra être redéfini à l’avenir, seront implémentées dans une hiérarchie de classes indépendante.
-Il faudra bien séparer les responsabilités : la partie visuelle (GUI) sera découplée de la partie logique métier (fonctionnement du jeu de la vie).
-Lors de la phase de conception, modéliser votre programme avec les diagrammes suivants :
-Diagramme de classes.
-Diagramme d’activité.
-Diagramme de séquence.
-Développer votre programme en C++ standard.
-S’appuyer sur la bibliothèque standard C++ STL.
-Utilisation de la bibliothèque graphique SFML pour le développement de votre interface graphique.
-Le programme doit être implémenté de manière efficace.
-Spécifications fonctionnelles
-L’utilisateur lance le programme et fournit le chemin du fichier contenant l’état initial des cellules en paramètre.
-Le programme consomme le fichier avec le format précédemment décrit et génère l’ensemble des objets du programme (grille, cellules).
-À chaque itération les cellules changent d’état selon les règles énoncées plus haut.
-L’exécution se termine lorsque l’automate n’évolue plus ou après un nombre d’itération fixé arbitrairement.
-Deux modes de fonctionnement seront implémentés :
-Le premier, en mode console, fournira les états des n premières itérations de votre jeu de la vie. À chaque itération le programme écrit l’état des cellules dans un fichier selon le format décrit précédemment. Ces résultats sont stockés dans des dossiers nommés <nom_du_fichier_dentree>_out et utilisés pour correction.
-Le second, en mode graphique, affiche la grille et l’état des cellules sur une interface graphique. Pour aboutir, vous disposez d’un exemple de code capable d’afficher une fenêtre graphique et une grille de cellules. Celui-ci devra être adapté en une version orientée objet. La simulation démarre au lancement du programme. La durée entre deux itérations est contrôlable.
-L’application contiendra impérativement une ou plusieurs fonctions de tests unitaires capables de vérifier l’état de la grille après un nombre arbitraire d’itérations. Elle sera ainsi paramétrée par la grille attendue et un nombre d’itérations.
-Extensions (points bonus)
-Gestion d’une grille torique. Les cellules placées aux extrémités de la grille sont adjacentes ; en d’autres termes les cellules en colonne 0 sont voisines des cellules en colonne N−1, avec N le nombre de colonnes. Le principe est similaire en ligne.
-Introduction de cellules obstacles. L’état des cellules obstacles n’évolue pas au cours de l’exécution. Ces dernières possèdent un état vivant ou mort. Modifiez votre code, sans altérer le fonctionnement de base.
-Placement de constructions pré-programmées sur la grille. Utilisez les touches du clavier pour intégrer de nouveaux motifs sur la grille lors de l’exécution.
-Paralléliser la génération des cellules. Modifiez votre algorithme pour paralléliser le traitement requis pour mettre à jour l’état des cellules sur la grille.
+Documentation utilisateur 
+1.1Présentation générale 
+Ce programme implémente une version personnalisée du « Jeu de la Vie » de 
+John Conway. 
+Il permet de : 
+• Charger une grille initiale à partir d’un fichier texte  
+• Simuler son évolution selon les règles du jeu  
+• Visualiser la simulation de manière graphique ou textuelle  
+• Enregistrer chaque itération dans des fichiers  
+• Consulter une itération donnée sous forme de fichier  
+• Exécuter des tests unitaires internes validant la cohérence du moteur 
+Fonctionnement de notre jeu  
+Le fonctionnement du programme repose sur un menu interactif composé de 
+cinq modes. 
+1.2. Format du fichier d’entrée 
+L’utilisateur doit fournir un fichier texte contenant : 
+1. Deux entiers : hauteur et largeur de la grille ; 
+2. Une matrice de dimensions hauteur × largeur composée de valeurs : 
+o 0 : cellule morte en bleu  
+o 1 : cellule vivante en vert 
+o 2 : obstacle vivant en magenta 
+o 3 : obstacle mort en rouge 
+14 
+Exemple de fichier valide : 
+10 9 
+1 0 0 0 1 1 1 0 0 
+0 2 1 1 3 0 0 3 0 
+3 1 3 0 0 0 2 0 0 
+0 2 2 1 2 0 1 0 0 
+0 0 1 1 1 0 1 1 1 
+3 1 3 0 0 0 0 0 0 
+0 2 2 1 2 0 1 2 1 
+0 0 1 1 1 0 0 0 0 
+3 1 3 0 0 0 0 0 0 
+3 1 3 0 0 0 0 0 0 
+1.3. Déroulement de l’utilisation 
+Étape 1 : Chargement initial 
+Le programme demande d’abord : 
+• Le nom du fichier d’entrée  
+• Le nombre d’itérations à exécuter 
+Le nombre d’itérations est contrôlé automatiquement : 
+seules les valeurs entières strictement positives sont acceptées sinon il 
+renvoie un message d’erreur. 
+Étape 2 : Menu principal 
+À chaque boucle, le programme affiche : 
+15 
+L’utilisateur choisit l’un des cinq modes décrits ci-après. 
+1.4. Description des modes 
+Mode 1 : Mode graphique (SFML) 
+Ce mode ouvre une fenêtre graphique permettant de visualiser l’évolution de 
+la grille en temps réel. 
+Caractéristiques : 
+• La fenêtre s’adapte à la taille de la grille (1 carré par cellule). 
+• Les cellules sont représentées par des couleurs distinctes : 
+o bleu : cellule morte  
+o vert : cellule vivante  
+o rouge : obstacle mort  
+o magenta : obstacle vivant 
+• Une mise à jour est effectuée toutes les secondes. 
+• La simulation s’arrête lorsque le nombre d’itération demandé par 
+l’utilisateur est atteint. 
+Ce mode n’écrit aucun fichier sur le disque. 
+Mode 2 : Mode console (génération des fichiers iteration_X) 
+Ce mode exécute la simulation dans la console et génère automatiquement un 
+fichier texte pour chaque itération : 
+iteration_0.txt 
+iteration_1.txt 
+16 
+... 
+iteration_N.txt 
+Chaque fichier contient : 
+• la hauteur et la largeur ; 
+• la grille de cellules à cet instant. 
+Ce mode doit avoir été exécuté au moins une fois avant d’utiliser le Mode 3. 
+Mode 3 : Affichage d’un fichier iteration_X 
+Ce mode permet de consulter à l’écran un fichier d’itération généré par le 
+mode console. 
+Fonctionnement : 
+• Le programme demande un numéro X ; 
+• Il ouvre iteration_X.txt et en affiche le contenu dans la console. 
+Si aucun fichier iteration_X n’a encore été généré, un message d’erreur 
+informe l’utilisateur. 
+Mode 4 : Tests unitaires internes 
+Ce mode exécute une batterie de tests automatiques. 
+Les tests portent notamment sur : 
+• Le calcul des voisins (calcCellNeighbors) ; 
+• La mise à jour de la grille (update) ; 
+Les tests sont implémentés avec assert() et affichent les résultats dans la 
+console. 
+Mode 5 : Quitter le programme 
+Met fin à l’exécution du programme. 
+17
+Environnement de développement opérationnel 
+Le développement du projet a été réalisé dans un environnement Linux, avec 
+une organisation professionnelle basée sur le contrôle de version et 
+l’utilisation d’outils dédiés à la compilation, aux tests et à la gestion du code. 
+1. Système d’exploitation 
+L’intégralité du projet a été développée et testée sous Linux . 
+Ce choix garantit : - un environnement stable et adapté à la compilation en C++ ; - une compatibilité optimale avec les outils Makefile ; - une gestion facilitée des dépendances comme SFML. 
+2. Gestion de version : Git et GitHub 
+Le suivi du code source a été assuré via Git, avec un dépôt hébergé sur GitHub. 
+Avantages : - Suivi précis des modifications et historique complet du développement. - Collaboration facilitée grâce aux branches, commits et pull requests. - Hébergement sécurisé et sauvegarde distante du projet. 
+Structure du dépôt : - src/ : fichiers sources (.cpp) - include/ : headers (.h/.hpp) - tests/ : tests unitaires - Makefile : script de compilation - README.md : instructions/sujet 
+18 
+3. Outils de compilation 
+Le Makefile permet : - la compilation complète du projet, - la génération des exécutables console et graphique, - le nettoyage automatique via `make clean`. 
+4. Langage et bibliothèques 
+Langage : - C++  
+Bibliothèque graphique : - SFML pour la gestion de fenêtre, l'affichage graphique et les événements 
+utilisateur 
+5. Organisation du développement - Commits réguliers sur GitHub - Compilation et tests en ligne de commande sous Linux - Architecture modulaire orientée objet 
